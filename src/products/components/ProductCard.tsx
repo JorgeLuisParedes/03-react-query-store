@@ -6,7 +6,7 @@ import type { Product } from '../interfaces/product';
 
 interface Props {
 	product: Product;
-	fullDescription: boolean;
+	fullDescription?: boolean;
 }
 
 export const ProductCard = ({ product, fullDescription = false }: Props) => {
