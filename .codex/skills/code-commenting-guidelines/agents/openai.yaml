@@ -1,0 +1,4 @@
+interface:
+    display_name: 'Guía de Comentarios de Código'
+    short_description: 'Documenta propósito, contratos y contexto útil.'
+    default_prompt: 'Usa $code-commenting-guidelines para documentar el diff actual o los archivos que indique explícitamente según su valor para la comprensión y el mantenimiento futuro.'

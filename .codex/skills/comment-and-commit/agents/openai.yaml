@@ -1,0 +1,4 @@
+interface:
+    display_name: 'Orquestación de Comentarios y Commit'
+    short_description: 'Documenta el diff antes de proponer el commit.'
+    default_prompt: 'Usa $comment-and-commit para evaluar primero la documentación del diff actual y proponer después un único título de commit basado en su estado final.'
