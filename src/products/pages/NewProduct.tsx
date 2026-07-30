@@ -50,7 +50,7 @@ export const NewProduct = () => {
 							width: '500px',
 							height: '600px',
 						}}>
-						<Image src='https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg' />
+						<Image src='https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_t.png' />
 					</div>
 				</div>
 			</form>
