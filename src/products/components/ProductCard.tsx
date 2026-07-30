@@ -8,11 +8,18 @@ interface Props {
 	product: Product;
 	/** Activa el formato de detalle con descripción completa y ancho limitado. */
 	fullDescription?: boolean;
+	/** Precarga el detalle asociado antes de navegar a la vista del producto. */
+	prefetchProduct?: (id: number) => void;
 }
 
-export const ProductCard = ({ product, fullDescription = false }: Props) => {
+export const ProductCard = ({
+	product,
+	fullDescription = false,
+	prefetchProduct,
+}: Props) => {
 	return (
 		<Link
+			onMouseEnter={() => prefetchProduct && prefetchProduct(product.id)}
 			className={`mx-auto block w-full ${
 				fullDescription ? 'max-w-5xl' : 'h-64'
 			}`}

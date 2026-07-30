@@ -6,6 +6,7 @@ export { ProductCard } from './components/ProductCard';
 export { ProductList } from './components/ProductList';
 export { productsApi } from './api/productsApi';
 export { StoreLayout } from './layout/StoreLayout';
+export { usePrefetchProduct } from './hooks/usePrefetchProduct';
 export { useProducts } from './hooks/useProducts';
 export { WomensPage } from './pages/WomensPage';
 export * as productActions from './services/actions';
