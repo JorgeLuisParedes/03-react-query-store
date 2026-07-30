@@ -6,36 +6,53 @@ import type { Product } from '../interfaces/product';
 
 interface Props {
 	product: Product;
+	/** Activa el formato de detalle con descripción completa y ancho limitado. */
 	fullDescription?: boolean;
 }
 
 export const ProductCard = ({ product, fullDescription = false }: Props) => {
 	return (
-		<Link to={`/product/${product.id}`}>
-			<Card className='relative flex flex-col md:flex-row md:space-x-5 space-y-3 md:space-y-0 rounded-xl shadow-lg p-3 max-w-xs md:max-w-3xl mx-auto border border-white bg-white'>
-				<div className='w-full md:w-1/3 bg-white grid place-items-center'>
+		<Link
+			className={`mx-auto block w-full ${
+				fullDescription ? 'max-w-5xl' : 'h-64'
+			}`}
+			to={`/product/${product.id}`}>
+			<Card
+				className={`relative flex rounded-xl border border-white bg-white p-3 shadow-lg ${
+					fullDescription
+						? 'min-h-80 flex-col md:flex-row'
+						: 'h-full flex-col md:flex-row'
+				}`}>
+				<div
+					className={`grid w-full place-items-center bg-white md:w-2/5 ${
+						fullDescription ? 'min-h-64' : 'h-full'
+					}`}>
 					<Image
 						src={product.image}
-						alt='tailwind logo'
+						alt={product.title}
 						width={300}
 						height={400}
-						className='rounded-xl p-5 sm:p-0 bg-white'
+						className='h-full max-h-56 w-full rounded-xl bg-white object-contain p-3'
 					/>
 				</div>
-				<div className='w-full md:w-2/3 bg-white flex flex-col space-y-2 p-3'>
-					<div className='flex justify-between item-center'>
-						<p className='text-gray-500 font-medium hidden md:block'>
-							{product.category}
-						</p>
-					</div>
-					<h3 className='font-black text-gray-800 md:text-2xl text-xl'>
+				<div className='flex w-full flex-col justify-center space-y-2 bg-white p-3 md:w-3/5'>
+					<p className='truncate font-medium text-gray-500'>
+						{product.category}
+					</p>
+					<h3
+						className={`${
+							fullDescription ? '' : 'line-clamp-2'
+						} text-xl font-black text-gray-800 md:text-2xl`}>
 						{product.title}
 					</h3>
 
-					<p className='md:text-lg text-gray-500 text-base'>
+					<p
+						className={`${
+							fullDescription ? '' : 'line-clamp-2'
+						} text-base text-gray-500 md:text-lg`}>
 						{fullDescription
 							? product.description
-							: product.description.slice(0, 50) + '...'}
+							: `${product.description.slice(0, 100)}...`}
 					</p>
 
 					<p className='text-xl font-black text-gray-800'>

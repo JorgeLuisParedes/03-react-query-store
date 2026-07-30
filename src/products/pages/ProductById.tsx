@@ -14,7 +14,7 @@ export const ProductById = () => {
 	}, []);
 
 	return (
-		<div className='flex-col'>
+		<div className='w-full'>
 			<h1 className='text-2xl font-bold'>Producto</h1>
 
 			{isLoading && <p>Cargando...</p>}

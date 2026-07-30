@@ -7,7 +7,7 @@ export const StoreLayout = () => {
 		<div className='flex flex-col min-h-screen pb-10'>
 			<NavBar />
 
-			<div className='flex px-10'>
+			<div className='flex w-full px-10'>
 				<Outlet />
 			</div>
 		</div>
