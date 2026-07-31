@@ -50,6 +50,27 @@ export const useProductMutation = () => {
 			// 	queryKey: ['products', { filterKey: product.category }],
 			// });
 		},
+
+		onError: (error, variables, context) => {
+			console.error('Error creando el producto:', error);
+
+			// Decisión: retirar el producto provisional evita mostrar un registro que el servidor rechazó.
+			queryClient.removeQueries({
+				queryKey: ['product', context?.optimisticProduct.id],
+			});
+
+			queryClient.setQueryData<Product[]>(
+				['products', { filterKey: variables.category }],
+				(old) => {
+					if (!old) return [];
+
+					return old.filter(
+						(cacheProduct) =>
+							cacheProduct.id !== context?.optimisticProduct.id,
+					);
+				},
+			);
+		},
 	});
 
 	return mutation;
