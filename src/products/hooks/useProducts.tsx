@@ -22,5 +22,5 @@ export const useProducts = ({ filterKey }: Options) => {
 		staleTime: 1000 * 60 * 60,
 	});
 
-	return { isLoading, isError, error, products, isFetching };
+	return { error, isError, isFetching, isLoading, products };
 };
