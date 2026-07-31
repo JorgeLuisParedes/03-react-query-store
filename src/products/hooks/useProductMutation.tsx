@@ -8,12 +8,39 @@ export const useProductMutation = () => {
 
 	const mutation = useMutation({
 		mutationFn: productActions.createProduct,
-		onSuccess: (product) => {
+		onMutate: (product) => {
+			// Decisión: Insertar una representación provisional mantiene la lista fluida mientras responde el servidor.
+			const optimisticProduct = {
+				id: Math.random(),
+				...product,
+			};
+
+			// La misma clave de categoría permite reemplazar después el producto provisional por la respuesta real.
+			queryClient.setQueryData<Product[]>(
+				['products', { filterKey: product.category }],
+				(old) => {
+					if (!old) return [optimisticProduct];
+					return [...old, optimisticProduct];
+				},
+			);
+
+			return { optimisticProduct };
+		},
+		onSuccess: (product, _variables, context) => {
+			queryClient.removeQueries({
+				queryKey: ['product', context?.optimisticProduct.id],
+			});
+
 			queryClient.setQueryData<Product[]>(
 				['products', { filterKey: product.category }],
 				(old) => {
 					if (!old) return [product];
-					return [...old, product];
+
+					return old.map((cacheProduct) =>
+						cacheProduct.id === context?.optimisticProduct.id
+							? product
+							: cacheProduct,
+					);
 				},
 			);
 

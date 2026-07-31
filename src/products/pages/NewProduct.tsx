@@ -29,7 +29,6 @@ export const NewProduct = () => {
 	const newImage = watch('image');
 
 	const onSubmit: SubmitHandler<FormInputs> = (data) => {
-		console.log(data);
 		productMutation.mutate(data);
 	};
 
