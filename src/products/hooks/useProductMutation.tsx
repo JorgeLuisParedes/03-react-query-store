@@ -1,16 +1,17 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { productActions } from '..';
 
 /** Coordina la mutation de creación de productos y expone sus estados al formulario. */
 export const useProductMutation = () => {
+	const queryClient = useQueryClient();
+
 	const mutation = useMutation({
 		mutationFn: productActions.createProduct,
-		onSuccess: () => {
-			console.log('Producto creado');
-		},
-		onSettled: () => {
-			console.log('on Settled');
+		onSuccess: (data) => {
+			queryClient.invalidateQueries({
+				queryKey: ['products', { filterKey: data.category }],
+			});
 		},
 	});
 
