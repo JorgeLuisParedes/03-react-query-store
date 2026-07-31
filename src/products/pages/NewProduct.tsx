@@ -1,6 +1,9 @@
 import { type SubmitHandler, Controller, useForm } from 'react-hook-form';
 
 import { Button, Image, Input, Textarea } from '@nextui-org/react';
+import { useMutation } from '@tanstack/react-query';
+
+import { productActions } from '..';
 
 interface FormInputs {
 	category: string;
@@ -11,6 +14,13 @@ interface FormInputs {
 }
 
 export const NewProduct = () => {
+	const productMutation = useMutation({
+		mutationFn: productActions.createProduct,
+		onSuccess: () => {
+			console.log('Producto creado');
+		},
+	});
+
 	const { control, handleSubmit, watch } = useForm<FormInputs>({
 		defaultValues: {
 			category: "men's clothing",
@@ -18,7 +28,7 @@ export const NewProduct = () => {
 				'Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis voluptates sequi quas culpa aliquid aspernatur nesciunt dolorum doloremque pariatur voluptatum magnam corrupti dolores, tenetur ullam impedit, iusto consectetur et accusamus!',
 			image: 'https://assets.mmsrg.com/isr/166325/c1/-/ASSET_MMS_85301431?x=536&y=402&format=jpg&quality=80&sp=yes&strip=yes&trim&ex=536&ey=402&align=center&resizesource&unsharp=1.5x1+0.7+0.02&cox=0&coy=0&cdx=536&cdy=402',
 			price: 150.2,
-			title: 'TEclado',
+			title: 'Teclado',
 		},
 	});
 
@@ -26,6 +36,7 @@ export const NewProduct = () => {
 
 	const onSubmit: SubmitHandler<FormInputs> = (data) => {
 		console.log(data);
+		productMutation.mutate(data);
 	};
 
 	return (
@@ -120,8 +131,14 @@ export const NewProduct = () => {
 						/>
 
 						<br />
-						<Button className='mt-2' color='primary' type='submit'>
-							Crear
+						<Button
+							className='mt-2'
+							color='primary'
+							type='submit'
+							isDisabled={productMutation.isPending}>
+							{productMutation.isPending
+								? 'Cargando...'
+								: 'Crear producto'}
 						</Button>
 					</div>
 
