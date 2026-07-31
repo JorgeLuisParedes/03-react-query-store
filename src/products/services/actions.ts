@@ -47,9 +47,9 @@ export const getProductById = async (id: number): Promise<Product> => {
 };
 
 export const createProduct = async (product: ProductLike) => {
-	// Decisión: Se omite la espera simulada en el flujo normal para no retrasar la creación.
-	// Alternativa: Descomentarla para probar el estado pendiente de la mutation durante el desarrollo.
-	// await sleep(2);
+	// Decisión: Se mantiene la espera simulada para hacer visible el estado pendiente de la mutation durante el desarrollo.
+	// Alternativa: Reducirla o eliminarla cuando no sea necesario probar la latencia del formulario.
+	await sleep(5);
 
 	const { data } = await productsApi.post<Product>(`/products`, product);
 	return data;
